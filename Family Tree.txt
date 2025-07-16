@@ -1,0 +1,34 @@
+% Facts
+male(john).
+male(paul).
+male(alex).
+male(james).
+
+female(mary).
+female(susan).
+female(lisa).
+female(emma).
+
+parent(john, paul).
+parent(mary, paul).
+parent(john, susan).
+parent(mary, susan).
+
+parent(paul, alex).
+parent(lisa, alex).
+parent(paul, emma).
+parent(lisa, emma).
+
+% Rules
+father(X, Y) :- parent(X, Y), male(X).
+mother(X, Y) :- parent(X, Y), female(X).
+
+sibling(X, Y) :- parent(Z, X), parent(Z, Y), X \= Y.
+
+grandparent(X, Y) :- parent(X, Z), parent(Z, Y).
+grandfather(X, Y) :- grandparent(X, Y), male(X).
+grandmother(X, Y) :- grandparent(X, Y), female(X).
+
+% Example: uncle, aunt
+uncle(X, Y) :- male(X), sibling(X, Z), parent(Z, Y).
+aunt(X, Y) :- female(X), sibling(X, Z), parent(Z, Y).
